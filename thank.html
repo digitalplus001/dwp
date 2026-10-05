@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thank You | Digital Wealth Partners</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/signup.css">
+</head>
+<body class="signup-page">
+
+  <header class="header header-scrolled" id="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png?v=2" alt="Digital Wealth Partners" class="logo-box" width="500" height="308">
+      </a>
+      <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="services.html" class="nav-item">Services</a>
+        <a href="digital-asset-custody.html" class="nav-item">Digital Asset Custody</a>
+        <a href="about-us.html" class="nav-item">About Us</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="login.html" class="nav-item">Login</a>
+        <a href="signup.html" class="nav-item signup-btn-mobile">Sign Up</a>
+      </nav>
+      <a href="signup.html" class="contact-btn">Sign Up</a>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay" hidden></div>
+  </header>
+
+  <div class="signup-page-wrap">
+    <div class="signup-container">
+      <div class="form-card text-center">
+        <h1 class="form-title">Application Received</h1>
+        <p class="text-muted" style="max-width:560px;margin:0 auto 1.5rem">
+          Thank you for submitting your XRP/XLM LLC formation application. A member of our team will review your information and be in contact as soon as possible.
+        </p>
+        <a href="index.html" class="signup-btn-primary" style="text-decoration:none">Return Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="js/footer.js?v=3"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    if (sessionStorage.getItem("signupSubmitted") !== "true") {
+      window.location.replace("signup.html");
+    }
+  </script>
+</body>
+</html>

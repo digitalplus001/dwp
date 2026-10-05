@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact DWP | Crypto Wealth Management &amp; Digital Asset Advisory</title>
+  <meta name="description" content="Contact Digital Wealth Partners. Complete the form and a member of our team will be in contact as soon as possible.">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact | Digital Wealth Partners">
+  <meta property="og:description" content="Contact Digital Wealth Partners. Complete the form and a member of our team will be in contact as soon as possible.">
+  <meta property="og:image" content="https://digitalwealthp.net/assets/siteimage.png">
+  <meta property="og:url" content="https://digitalwealthp.net/contact.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact | Digital Wealth Partners">
+  <meta name="twitter:description" content="Contact Digital Wealth Partners. Complete the form and a member of our team will be in contact as soon as possible.">
+  <meta name="twitter:image" content="https://digitalwealthp.net/assets/siteimage.png">
+</head>
+<body>
+
+  <header class="header header-scrolled" id="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png?v=2" alt="Digital Wealth Partners" class="logo-box" width="500" height="308">
+      </a>
+      <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="services.html" class="nav-item">Services</a>
+        <a href="digital-asset-custody.html" class="nav-item">Digital Asset Custody</a>
+        <a href="about-us.html" class="nav-item">About Us</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="login.html" class="nav-item">Login</a>
+        <a href="signup.html" class="nav-item signup-btn-mobile">Sign Up</a>
+      </nav>
+      <a href="contact.html" class="contact-btn">Contact Us</a>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay" hidden></div>
+  </header>
+
+  <div class="contact-header-wrapper">
+    <header class="contact-header">
+      <div class="contact-header-overlay" aria-hidden="true"></div>
+      <div class="contact-header-container">
+        <h1 class="contact-header-title">Contact Us</h1>
+      </div>
+    </header>
+  </div>
+
+  <main class="contact-main">
+    <div class="contact-row">
+      <div class="contact-column left">
+        <div class="contact-intro">
+          <p>Thank you for your interest in working with Digital Wealth Partners. Please complete the form below and a member of our team will be in contact as soon as possible.</p>
+        </div>
+
+        <form id="contact-form" class="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group half">
+              <label>Name <span class="required">*</span></label>
+              <input type="text" name="firstName" id="firstName" autocomplete="given-name">
+              <span class="field-hint">First</span>
+              <span class="error-message" data-error="firstName"></span>
+            </div>
+            <div class="form-group half">
+              <label>&nbsp;</label>
+              <input type="text" name="lastName" id="lastName" autocomplete="family-name">
+              <span class="field-hint">Last</span>
+              <span class="error-message" data-error="lastName"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Email <span class="required">*</span></label>
+            <input type="email" name="email" id="email" autocomplete="email">
+            <span class="error-message" data-error="email"></span>
+          </div>
+
+          <div class="form-group">
+            <label>Phone <span class="required">*</span></label>
+            <input type="tel" name="phone" id="phone" autocomplete="tel">
+            <span class="error-message" data-error="phone"></span>
+          </div>
+
+          <div class="form-group">
+            <label>Address</label>
+            <div class="address-line">
+              <input type="text" name="address.line1" id="addressLine1" autocomplete="address-line1">
+            </div>
+            <div class="address-line">
+              <input type="text" name="address.line2" id="addressLine2" autocomplete="address-line2">
+            </div>
+            <div class="form-row three-columns">
+              <div>
+                <input type="text" name="address.city" id="addressCity" autocomplete="address-level2">
+                <span class="field-hint">City</span>
+              </div>
+              <div>
+                <input type="text" name="address.state" id="addressState" autocomplete="address-level1">
+                <span class="field-hint">State/Province</span>
+              </div>
+              <div>
+                <input type="text" name="address.zip" id="addressZip" autocomplete="postal-code">
+                <span class="field-hint">Zip/Postal</span>
+              </div>
+            </div>
+            <select name="address.country" id="addressCountry" aria-label="Country">
+              <option value="">Select Country</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Client Type <span class="required">*</span></label>
+            <select name="clientType" id="clientType" required>
+              <option value="">Select One</option>
+              <option value="Individual">Individual</option>
+              <option value="Family Office">Family Office</option>
+              <option value="RIA Firm">RIA Firm</option>
+              <option value="TAMP">TAMP</option>
+            </select>
+            <span class="error-message" data-error="clientType"></span>
+          </div>
+
+          <div class="form-group">
+            <label>Do you have a LLC, Trust, or Corporation? <span class="required">*</span></label>
+            <div class="radio-group" role="radiogroup" aria-label="LLC, Trust, or Corporation">
+              <label><input type="radio" name="hasLLCTrust" value="Yes"> Yes</label>
+              <label><input type="radio" name="hasLLCTrust" value="No"> No</label>
+            </div>
+            <span class="error-message" data-error="hasLLCTrust"></span>
+          </div>
+
+          <div class="form-group" id="llc-name-group" hidden>
+            <label>Name of LLC/Trust/Corp?</label>
+            <input type="text" name="LLCTrustName" id="LLCTrustName">
+          </div>
+
+          <div class="form-group">
+            <label>Current Allocation to Digital Assets <span class="required">*</span></label>
+            <select name="currentAllocation" id="currentAllocation" required>
+              <option value="">Select One</option>
+              <option value="Less than $500k USD">Less than $500k USD</option>
+              <option value="Greater than $100k USD">Greater than $100k USD</option>
+            </select>
+            <span class="error-message" data-error="currentAllocation"></span>
+          </div>
+
+          <div class="form-group">
+            <label>Do you currently hold 100,000 or more XRP Tokens? <span class="required">*</span></label>
+            <div class="radio-group" role="radiogroup" aria-label="XRP holdings">
+              <label><input type="radio" name="hasXRP" value="Yes"> Yes</label>
+              <label><input type="radio" name="hasXRP" value="No"> No</label>
+            </div>
+            <span class="error-message" data-error="hasXRP"></span>
+          </div>
+
+          <div class="form-group">
+            <label>Please list all digital assets you are interested in transferring to institutional custody: <span class="required">*</span></label>
+            <input type="text" name="digitalAssets" id="digitalAssets">
+            <span class="error-message" data-error="digitalAssets"></span>
+          </div>
+
+          <div class="form-group">
+            <label>Message <span class="required">*</span></label>
+            <textarea name="message" id="message" rows="5" maxlength="750"></textarea>
+            <div class="char-count"><span id="char-count">0</span> of 750 max characters</div>
+            <span class="error-message" data-error="message"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <label>
+                <input type="checkbox" name="acceptedComms" id="acceptedComms" required>
+                <span>I understand that if I receive any communication outside of official channels, I should report it to DWP immediately. DWP will never request seed phrases or ask to send cryptocurrency via email, Discord, Telegram, or any other informal platform.</span>
+              </label>
+            </div>
+            <span class="error-message" data-error="acceptedComms"></span>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="submit-button" id="submit-btn">Next</button>
+            <div class="success-message" id="form-success" hidden>Form submitted successfully!</div>
+            <div class="error-message form-submit-error" id="form-submit-error" hidden></div>
+          </div>
+        </form>
+      </div>
+
+      <div class="contact-column right">
+        <div class="image-container">
+          <span class="shape-dots top" aria-hidden="true"></span>
+          <img src="assets/contact-side.jpg" alt="" class="contact-image" width="400" height="400">
+          <span class="shape-dots bottom" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/countries.js"></script>
+  <script src="js/footer.js?v=3"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>

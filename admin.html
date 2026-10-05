@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — Applications | Digital Wealth Partners</title>
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=2">
+  <link rel="stylesheet" href="css/dashboard.css?v=7">
+  <link rel="stylesheet" href="css/admin.css?v=6">
+</head>
+<body class="admin-page">
+
+  <!-- Public site header (hidden on the admin page — navigation lives in the sidebar) -->
+  <header class="header header-scrolled" id="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png?v=2" alt="Digital Wealth Partners" class="logo-box" width="500" height="308">
+      </a>
+      <button class="mobile-menu-btn" type="button" aria-label="Open menu"><i class="bi bi-list"></i></button>
+      <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="services.html" class="nav-item">Services</a>
+        <a href="digital-asset-custody.html" class="nav-item">Digital Asset Custody</a>
+        <a href="about-us.html" class="nav-item">About Us</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="login.html" class="nav-item">Login</a>
+        <a href="signup.html" class="nav-item signup-btn-mobile">Sign Up</a>
+      </nav>
+      <a href="signup.html" class="contact-btn">Sign Up</a>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay" hidden></div>
+  </header>
+
+  <!-- Mobile top bar — opens the sidebar drawer below 900px -->
+  <div class="admin-topbar">
+    <button type="button" class="admin-menu-btn" id="admin-menu-btn" aria-label="Open navigation" aria-expanded="false" aria-controls="admin-sidebar"><i class="bi bi-list"></i></button>
+    <span class="admin-topbar__title">Administration</span>
+    <a href="index.html" class="admin-topbar__brand" aria-label="Digital Wealth Partners home"><img src="assets/logo.png?v=2" alt="Digital Wealth Partners"></a>
+  </div>
+
+  <div class="admin-scrim" id="admin-scrim" hidden></div>
+
+  <!-- Sidebar navigation (replaces the old top tab strip) -->
+  <aside class="admin-sidebar" id="admin-sidebar" aria-label="Admin navigation">
+    <div class="admin-sidebar__brand">
+      <a href="index.html" aria-label="Digital Wealth Partners home">
+        <img src="assets/logo-light.png" alt="Digital Wealth Partners" class="admin-sidebar__logo">
+      </a>
+      <p class="admin-sidebar__caption"><i class="bi bi-shield-lock"></i> Administration</p>
+    </div>
+    <nav class="admin-sidebar__nav" aria-label="Admin sections">
+      <button type="button" class="admin-tab admin-tab--active" data-admin-tab="applications">
+        <i class="bi bi-file-earmark-check"></i>
+        <span class="admin-sidebar__label">Applications</span>
+        <span class="admin-tab-count" data-tab-count="applications" hidden></span>
+      </button>
+      <button type="button" class="admin-tab" data-admin-tab="users">
+        <i class="bi bi-people"></i>
+        <span class="admin-sidebar__label">User Management</span>
+      </button>
+      <button type="button" class="admin-tab" data-admin-tab="wallets">
+        <i class="bi bi-wallet2"></i>
+        <span class="admin-sidebar__label">Wallet Addresses</span>
+      </button>
+    </nav>
+    <div class="admin-sidebar__user">
+      <span class="admin-sidebar__avatar"><i class="bi bi-person-gear"></i></span>
+      <p class="admin-sidebar__email" id="admin-user-email" title="Signed in as"></p>
+      <button type="button" class="admin-sidebar__signout" id="admin-sign-out"><i class="bi bi-box-arrow-right"></i> Sign out</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <section class="admin-page-head">
+      <div class="admin-page-head__text">
+        <p class="admin-eyebrow"><i class="bi bi-shield-lock"></i> Administration</p>
+        <h1>Dashboard</h1>
+        <p class="dashboard-meta">
+          <strong>Approve signup</strong> lets clients log in;
+          <strong>Confirm deposit</strong> credits their portfolio;
+          <strong>Approve / Deny</strong> handles withdrawal requests.
+        </p>
+        <p id="admin-access-hint" class="admin-access-hint" hidden></p>
+      </div>
+      <div class="toolbar-actions">
+        <span class="admin-updated" id="admin-updated" hidden>Updated just now</span>
+        <div class="notif-widget notif-widget--admin" id="admin-notif" data-notif-widget="admin"></div>
+        <button type="button" class="btn-outline" id="admin-refresh"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+      </div>
+    </section>
+
+    <section class="admin-stats" id="admin-stats" aria-label="Key metrics">
+      <article class="stat-card">
+        <div class="stat-card__icon stat-card__icon--navy"><i class="bi bi-people"></i></div>
+        <div class="stat-card__body">
+          <p class="stat-card__label">Total clients</p>
+          <p class="stat-card__value" id="stat-clients">—</p>
+          <p class="stat-card__foot" id="stat-clients-foot">&nbsp;</p>
+        </div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__icon stat-card__icon--amber"><i class="bi bi-hourglass-split"></i></div>
+        <div class="stat-card__body">
+          <p class="stat-card__label">Pending signups</p>
+          <p class="stat-card__value" id="stat-pending">—</p>
+          <p class="stat-card__foot" id="stat-pending-foot">Awaiting approval</p>
+        </div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__icon stat-card__icon--green"><i class="bi bi-patch-check"></i></div>
+        <div class="stat-card__body">
+          <p class="stat-card__label">Active accounts</p>
+          <p class="stat-card__value" id="stat-active">—</p>
+          <p class="stat-card__foot" id="stat-active-foot">&nbsp;</p>
+        </div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__icon stat-card__icon--gold"><i class="bi bi-graph-up-arrow"></i></div>
+        <div class="stat-card__body">
+          <p class="stat-card__label">Portfolio value</p>
+          <p class="stat-card__value" id="stat-aum">—</p>
+          <p class="stat-card__foot" id="stat-aum-foot">Across all clients</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ── Applications tab ───────────────────────────────── -->
+    <div id="admin-tab-panel-applications" class="admin-tab-panel">
+      <div class="panel admin-panel">
+        <div class="admin-panel-head">
+          <div class="admin-panel-head__text">
+            <h2>Client applications</h2>
+            <p class="admin-panel-sub">Approve signups, confirm deposits and review withdrawal requests.</p>
+          </div>
+          <div class="admin-table-tools">
+            <label class="admin-search">
+              <i class="bi bi-search"></i>
+              <input type="search" id="apps-search" placeholder="Search name, email, LLC…" aria-label="Search applications" autocomplete="off">
+            </label>
+            <span class="admin-count" id="apps-count" hidden></span>
+          </div>
+        </div>
+
+        <p id="admin-loading" class="loading-text"><span class="admin-spinner"></span>Loading applications…</p>
+        <p id="admin-denied" class="denied-text" hidden><i class="bi bi-lock"></i> Access denied. This page is for administrators only.</p>
+        <p id="admin-empty" class="empty-text" hidden>No applications yet.</p>
+
+        <div id="admin-table-wrap" class="admin-table-wrap" hidden>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">LLC</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Signup</th>
+                <th scope="col">Deposits</th>
+                <th scope="col">Withdrawals</th>
+                <th scope="col">Submitted</th>
+                <th scope="col" class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-tbody"></tbody>
+          </table>
+          <p id="apps-no-results" class="admin-no-results" hidden>
+            <i class="bi bi-search"></i> No applications match your search.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Wallet Addresses tab ──────────────────────────── -->
+    <div id="admin-tab-panel-wallets" class="admin-tab-panel" hidden>
+      <div class="panel admin-panel">
+        <div class="admin-panel-head">
+          <div class="admin-panel-head__text">
+            <h2>Deposit wallet addresses</h2>
+            <p class="admin-panel-sub">Addresses shown to clients on the Deposit screen.</p>
+          </div>
+          <div class="admin-table-tools">
+            <button type="button" class="btn-activate" id="wallets-save-btn"><i class="bi bi-check2-circle"></i> Save All Addresses</button>
+          </div>
+        </div>
+
+        <p id="wallets-loading" class="loading-text" hidden><span class="admin-spinner"></span>Loading wallet addresses…</p>
+
+        <div id="wallets-wrap" class="admin-table-wrap" hidden>
+          <div class="wallets-header">
+            <p class="dashboard-meta">
+              Edit any address or network label below, then click <strong>Save All Addresses</strong>.
+              Changes take effect immediately — no redeployment needed.
+            </p>
+          </div>
+          <table class="admin-table admin-table--wallets">
+            <thead>
+              <tr>
+                <th scope="col">Asset</th>
+                <th scope="col">Network Label</th>
+                <th scope="col">Wallet Address</th>
+              </tr>
+            </thead>
+            <tbody id="wallets-tbody"></tbody>
+          </table>
+          <p id="wallets-save-notice" class="wallets-save-notice" hidden><i class="bi bi-check-circle"></i> Addresses saved successfully.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── User Management tab ────────────────────────────── -->
+    <div id="admin-tab-panel-users" class="admin-tab-panel" hidden>
+      <div class="panel admin-panel">
+        <div class="admin-panel-head">
+          <div class="admin-panel-head__text">
+            <h2>User management</h2>
+            <p class="admin-panel-sub">Portfolios, returns and account activation for every client.</p>
+          </div>
+          <div class="admin-table-tools">
+            <label class="admin-search">
+              <i class="bi bi-search"></i>
+              <input type="search" id="users-search" placeholder="Search name or email…" aria-label="Search users" autocomplete="off">
+            </label>
+            <span class="admin-count" id="users-count" hidden></span>
+          </div>
+        </div>
+
+        <p id="users-loading" class="loading-text" hidden><span class="admin-spinner"></span>Loading users…</p>
+        <p id="users-empty" class="empty-text" hidden>No registered users found.</p>
+
+        <div id="users-table-wrap" class="admin-table-wrap" hidden>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Signup</th>
+                <th scope="col">Activated</th>
+                <th scope="col" class="th-num">Total Balance</th>
+                <th scope="col">Holdings</th>
+                <th scope="col" class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody"></tbody>
+          </table>
+          <p id="users-no-results" class="admin-no-results" hidden>
+            <i class="bi bi-search"></i> No users match your search.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="admin-detail-modal" class="admin-modal" hidden aria-hidden="true">
+    <div class="admin-modal-backdrop" data-admin-modal-close></div>
+    <div class="admin-modal-dialog" role="dialog" aria-labelledby="admin-modal-title" aria-modal="true">
+      <header class="admin-modal-header">
+        <h2 id="admin-modal-title">Application details</h2>
+        <button type="button" class="admin-modal-close" data-admin-modal-close aria-label="Close">&times;</button>
+      </header>
+      <div class="admin-modal-body" id="admin-modal-body"></div>
+      <footer class="admin-modal-footer">
+        <button type="button" class="btn-outline" data-admin-modal-close>Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ── Portfolio Edit Modal ──────────────────────────────── -->
+  <div id="portfolio-edit-modal" class="admin-modal" hidden aria-hidden="true">
+    <div class="admin-modal-backdrop" data-portfolio-modal-close></div>
+    <div class="admin-modal-dialog admin-modal-dialog--wide" role="dialog" aria-labelledby="portfolio-edit-heading" aria-modal="true">
+      <header class="admin-modal-header">
+        <h2 id="portfolio-edit-heading">Edit Portfolio — <span id="portfolio-edit-name"></span></h2>
+        <button type="button" class="admin-modal-close" data-portfolio-modal-close aria-label="Close">&times;</button>
+      </header>
+      <div class="admin-modal-body" id="portfolio-edit-body"></div>
+      <footer class="admin-modal-footer" id="portfolio-edit-footer">
+        <button type="button" class="btn-outline" data-portfolio-modal-close>Cancel</button>
+        <button type="button" class="btn-activate" id="portfolio-save-btn">Save Changes</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ── Add Profit Modal ──────────────────────────────────── -->
+  <div id="profit-modal" class="admin-modal" hidden aria-hidden="true">
+    <div class="admin-modal-backdrop" data-profit-modal-close></div>
+    <div class="admin-modal-dialog" role="dialog" aria-labelledby="profit-modal-heading" aria-modal="true">
+      <header class="admin-modal-header">
+        <h2 id="profit-modal-heading">Add Profit — <span id="profit-modal-name"></span></h2>
+        <button type="button" class="admin-modal-close" data-profit-modal-close aria-label="Close">&times;</button>
+      </header>
+      <div class="admin-modal-body">
+        <div class="profit-form-grid">
+          <label class="profit-form-label" for="profit-period">Period Label</label>
+          <input type="text" id="profit-period" class="portfolio-field" placeholder="e.g. Q2 2025">
+
+          <label class="profit-form-label" for="profit-start">Start Date</label>
+          <input type="date" id="profit-start" class="portfolio-field">
+
+          <label class="profit-form-label" for="profit-end">End Date</label>
+          <input type="date" id="profit-end" class="portfolio-field">
+
+          <label class="profit-form-label" for="profit-pct">Profit Percentage</label>
+          <div class="profit-pct-row">
+            <input type="number" id="profit-pct" class="portfolio-field" min="0" step="0.01" placeholder="e.g. 12.5">
+            <span class="profit-pct-symbol">%</span>
+          </div>
+        </div>
+
+        <div class="profit-preview-box">
+          <div class="profit-preview-row">
+            <span class="profit-preview-label">Current crypto value</span>
+            <span class="profit-preview-val" id="profit-before-val">—</span>
+          </div>
+          <div class="profit-preview-row">
+            <span class="profit-preview-label">After profit applied</span>
+            <span class="profit-preview-val profit-preview-after" id="profit-after-val">—</span>
+          </div>
+          <div class="profit-preview-row profit-preview-gain-row">
+            <span class="profit-preview-label">Profit earned</span>
+            <span class="profit-preview-val profit-preview-gain" id="profit-gain-val">—</span>
+          </div>
+        </div>
+        <p class="admin-notice--info">Profit is applied to crypto holdings only. The cash balance is unchanged. A record is added to the user's profit history.</p>
+      </div>
+      <footer class="admin-modal-footer">
+        <button type="button" class="btn-outline" data-profit-modal-close>Cancel</button>
+        <button type="button" class="btn-activate" id="profit-apply-btn">Apply Profit</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ── Set Return Modal ──────────────────────────────────── -->
+  <div id="return-modal" class="admin-modal" hidden aria-hidden="true">
+    <div class="admin-modal-backdrop" data-return-modal-close></div>
+    <div class="admin-modal-dialog" role="dialog" aria-labelledby="return-modal-heading" aria-modal="true">
+      <header class="admin-modal-header">
+        <h2 id="return-modal-heading">Set Return — <span id="return-modal-name"></span></h2>
+        <button type="button" class="admin-modal-close" data-return-modal-close aria-label="Close">&times;</button>
+      </header>
+      <div class="admin-modal-body">
+        <div class="profit-form-grid">
+          <label class="profit-form-label" for="return-investment-date">Investment Date</label>
+          <input type="date" id="return-investment-date" class="portfolio-field">
+
+          <label class="profit-form-label" for="return-investment-amount">Investment Amount</label>
+          <input type="number" id="return-investment-amount" class="portfolio-field" min="0" step="0.01" placeholder="0.00">
+
+          <label class="profit-form-label" for="return-investment-type">Profit Type</label>
+          <select id="return-investment-type" class="portfolio-field">
+            <option value="none">None</option>
+            <option value="yield">Investment Yield</option>
+          </select>
+
+          <label class="profit-form-label" for="return-monthly-usd">Monthly Return — $ shown</label>
+          <input type="number" id="return-monthly-usd" class="portfolio-field" step="0.01" placeholder="blank = use rate">
+
+          <label class="profit-form-label" for="return-monthly-pct">Monthly Return — % shown</label>
+          <input type="number" id="return-monthly-pct" class="portfolio-field" step="0.01" placeholder="blank = use rate">
+
+          <label class="profit-form-label" for="return-annual-usd">Annual Return — $ shown</label>
+          <input type="number" id="return-annual-usd" class="portfolio-field" step="0.01" placeholder="blank = use rate">
+
+          <label class="profit-form-label" for="return-annual-pct">Annual Return — % shown</label>
+          <input type="number" id="return-annual-pct" class="portfolio-field" step="0.01" placeholder="blank = use rate">
+        </div>
+        <p class="admin-notice--info">By default the client sees the Monthly/Annual Return Rate (set in Edit Portfolio) × their current portfolio value, recalculated live. Setting a fixed $ and/or % here shows that exact figure instead, regardless of portfolio value. Leave a field blank to go back to the rate-based figure.</p>
+      </div>
+      <footer class="admin-modal-footer">
+        <button type="button" class="btn-outline" data-return-modal-close>Cancel</button>
+        <button type="button" class="btn-activate" id="return-save-btn">Save Return</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ── Client Chat Modal ──────────────────────────────────── -->
+  <div id="admin-chat-modal" class="admin-modal admin-modal--chat" hidden aria-hidden="true">
+    <div class="admin-modal-backdrop" data-chat-modal-close></div>
+    <div class="admin-modal-dialog admin-modal-dialog--chat" role="dialog" aria-labelledby="admin-chat-title" aria-modal="true">
+      <header class="admin-modal-header">
+        <div class="admin-chat-head">
+          <span class="admin-chat-avatar"><i class="bi bi-chat-dots-fill"></i></span>
+          <div class="admin-chat-head__text">
+            <h2 id="admin-chat-title">Client chat</h2>
+            <p class="admin-chat-sub" id="admin-chat-sub"></p>
+          </div>
+        </div>
+        <button type="button" class="admin-modal-close" data-chat-modal-close aria-label="Close">&times;</button>
+      </header>
+      <div class="admin-modal-body admin-chat-body" id="admin-chat-body">
+        <p class="admin-chat-loading" id="admin-chat-loading"><span class="admin-spinner"></span> Loading conversation…</p>
+        <div class="admin-chat-messages" id="admin-chat-messages"></div>
+        <p class="admin-chat-empty" id="admin-chat-empty" hidden><i class="bi bi-chat-quote"></i> No messages yet — send the first reply below.</p>
+      </div>
+      <p class="admin-chat-error" id="admin-chat-error" hidden></p>
+      <footer class="admin-modal-footer admin-chat-composer">
+        <label class="sr-only" for="admin-chat-input">Message</label>
+        <textarea id="admin-chat-input" rows="1" placeholder="Type a message… (Enter to send)"></textarea>
+        <button type="button" class="btn-activate" id="admin-chat-send"><i class="bi bi-send-fill"></i> Send</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- ── Styled alert / confirm modal (replaces window.alert / window.confirm) ── -->
+  <div id="admin-confirm-modal" class="admin-modal admin-modal--confirm" hidden aria-hidden="true">
+    <div class="admin-modal-backdrop" data-confirm-dismiss></div>
+    <div class="admin-modal-dialog admin-modal-dialog--confirm" role="alertdialog" aria-modal="true" aria-labelledby="admin-confirm-title" aria-describedby="admin-confirm-msg">
+      <div class="admin-confirm__icon admin-confirm__icon--info" id="admin-confirm-icon"><i class="bi bi-info-circle-fill"></i></div>
+      <h2 class="admin-confirm__title" id="admin-confirm-title">Notice</h2>
+      <p class="admin-confirm__msg" id="admin-confirm-msg"></p>
+      <div class="admin-confirm__actions">
+        <button type="button" class="btn-outline" id="admin-confirm-cancel">Cancel</button>
+        <button type="button" class="btn-activate" id="admin-confirm-ok">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="js/site-build.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/storage-upload.js?v=2"></script>
+  <script src="js/account-ledger.js?v=12"></script>
+  <script src="js/crypto-prices.js?v=7"></script>
+  <script src="js/wallet-config.js"></script>
+  <script src="js/auth-utils.js"></script>
+  <script src="js/realtime.js"></script>
+  <script src="js/notifications.js?v=3"></script>
+  <script src="js/footer.js?v=3"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/table-pagination.js?v=1"></script>
+  <script src="js/admin.js?v=18"></script>
+</body>
+</html>

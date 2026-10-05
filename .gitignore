@@ -1,0 +1,4 @@
+# Runtime artifacts
+/uploads/
+server/node_modules/
+server/.env

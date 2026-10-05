@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Internal / auth-required pages — keep off search engines
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /account-pending.html
+Disallow: /login.html
+Disallow: /thank.html
+Disallow: /insert.html
+
+Sitemap: https://digitalwealthp.net/sitemap.xml

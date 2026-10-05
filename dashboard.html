@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | Digital Wealth Partners</title>
+  <meta name="description" content="Your Digital Wealth Partners client dashboard.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=3">
+  <link rel="stylesheet" href="css/dashboard.css?v=13">
+</head>
+<body class="dashboard-page thedwp-dashboard">
+
+  <!-- Admin impersonation banner — hidden unless admin is viewing a user's account -->
+  <div id="impersonation-banner" class="impersonation-banner" hidden>
+    <div class="impersonation-banner-inner">
+      <span class="impersonation-icon">&#9888;</span>
+      <span class="impersonation-text">
+        Admin view: you are managing <strong id="impersonation-user-name"></strong>'s account on their behalf.
+        Actions taken here will affect their account directly.
+      </span>
+      <button type="button" class="impersonation-exit-btn" id="impersonation-exit-btn">Exit to Admin Panel</button>
+    </div>
+  </div>
+
+  <!-- Mobile top bar — opens the portal sidebar drawer below 1024px -->
+  <div class="portal-topbar">
+    <button type="button" class="portal-menu-btn" id="dash-menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="dash-nav-menu">
+      <i class="bi bi-list"></i>
+    </button>
+    <span class="portal-topbar__title">Dashboard</span>
+    <a href="index.html" class="portal-topbar__brand" aria-label="Digital Wealth Partners home">
+      <img src="assets/logo.png?v=2" alt="Digital Wealth Partners">
+    </a>
+  </div>
+
+  <div class="portal-scrim" id="dash-nav-overlay" hidden></div>
+
+  <!-- Sidebar navigation (replaces the public site header + top tab strip) -->
+  <aside class="portal-sidebar" id="dash-nav-menu" aria-label="Dashboard navigation" aria-hidden="false">
+    <div class="portal-sidebar__brand">
+      <a href="index.html" aria-label="Digital Wealth Partners home">
+        <img src="assets/logo-light.png" alt="Digital Wealth Partners" class="portal-sidebar__logo">
+      </a>
+      <p class="portal-sidebar__caption"><i class="bi bi-graph-up-arrow"></i> Client Portal</p>
+      <button type="button" class="portal-sidebar__close" id="dash-menu-close" aria-label="Close menu">&times;</button>
+    </div>
+    <nav class="portal-sidebar__nav accnav" id="accnav" aria-label="Dashboard sections">
+      <a href="#" data-tab="overview" class="portal-tab active"><i class="bi bi-grid-1x2-fill"></i><span>Overview</span></a>
+      <a href="#" data-tab="assets" class="portal-tab"><i class="bi bi-wallet2"></i><span>Assets</span></a>
+      <a href="#" data-tab="investments" class="portal-tab"><i class="bi bi-graph-up"></i><span>Investments</span></a>
+      <a href="#" data-tab="profits" class="portal-tab"><i class="bi bi-cash-stack"></i><span>Profits</span></a>
+      <a href="#" data-tab="transactions" class="portal-tab"><i class="bi bi-arrow-left-right"></i><span>Transactions</span></a>
+      <a href="#" data-tab="deposit" class="portal-tab"><i class="bi bi-box-arrow-in-down"></i><span>Deposit</span></a>
+      <a href="#" data-tab="withdrawal" class="portal-tab"><i class="bi bi-box-arrow-up"></i><span>Withdrawal</span></a>
+      <a href="#" data-tab="messages" class="portal-tab"><i class="bi bi-chat-dots-fill"></i><span>Messages</span><span class="portal-tab__badge" id="nav-messages-badge" hidden></span></a>
+    </nav>
+    <div class="portal-sidebar__user">
+      <span class="portal-sidebar__avatar" id="portal-user-avatar">U</span>
+      <div class="portal-sidebar__userinfo">
+        <p class="portal-sidebar__name" id="portal-user-name" title="Signed in as">User</p>
+        <p class="portal-sidebar__role">Client account</p>
+      </div>
+      <button type="button" class="portal-sidebar__signout" id="sign-out-btn"><i class="bi bi-box-arrow-right"></i> Sign out</button>
+    </div>
+  </aside>
+
+  <div class="portal-main">
+  <p id="dashboard-loading" class="dashboard-loading">Loading your dashboard…</p>
+
+  <div id="dashboard-root" hidden>
+
+    <header class="portal-pagehead">
+      <div class="portal-pagehead__text">
+        <p class="portal-eyebrow"><i class="bi bi-person-circle"></i> Client Portal</p>
+        <h1>Welcome Back, <span id="dashboard-user-name">User</span></h1>
+        <p id="dashboard-date"></p>
+      </div>
+      <div class="portal-pagehead__actions">
+        <div class="notif-widget" id="client-notif" data-notif-widget="client"></div>
+      </div>
+    </header>
+
+    <div class="container dash-main">
+
+      <!-- Overview -->
+      <div id="panel-overview" class="dash-panel">
+        <div id="overview-activation" class="dash-activation-card" hidden>
+          <h3 id="activation-title">Account Activation Required</h3>
+          <p>To access this feature, please make your first deposit to activate your account.</p>
+          <p><strong>After deposit confirmation by our team, your account will be activated</strong> and you'll have full access to all dashboard features.</p>
+          <button type="button" class="btn-deposit-cta" data-goto-tab="deposit">Make First Deposit</button>
+        </div>
+        <div id="overview-pending-banner" class="overview-pending-banner" hidden>
+          <p id="overview-pending-text"></p>
+        </div>
+        <div id="overview-active">
+          <div class="cards">
+            <div class="card">
+              <span class="card-icon"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></span>
+              <h3>Total Portfolio Value</h3>
+              <div class="value" id="stat-total-balance">$0.00</div>
+              <p class="balance-token-equiv" id="stat-total-breakdown" hidden></p>
+              <p class="overview-pending-note" id="stat-pending-note" hidden></p>
+              <a href="#" class="btn btn-dark" id="my-assets-link" data-goto-tab="assets">My Assets</a>
+            </div>
+            <div class="card">
+              <span class="card-icon"><i class="bi bi-currency-bitcoin" aria-hidden="true"></i></span>
+              <h3>Crypto Assets</h3>
+              <div class="value" id="stat-investments-count">0</div>
+              <p class="card-sub" id="stat-crypto-usd">$0.00 in crypto</p>
+            </div>
+            <div class="card">
+              <span class="card-icon"><i class="bi bi-cash-stack" aria-hidden="true"></i></span>
+              <h3>Available USD Cash</h3>
+              <div class="value" id="stat-available-cash">$0.00</div>
+              <p class="card-sub">Fiat USD only — crypto balances are in portfolio total</p>
+            </div>
+          </div>
+          <div class="recent">
+            <h3><i class="bi bi-activity" aria-hidden="true"></i> Recent Activity</h3>
+            <div id="overview-activity-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Your Assets — reference: thedwp.net/dashboard/assets -->
+      <div id="panel-assets" class="dash-panel" hidden>
+        <div class="assets-page dashboard-assets-view">
+          <div id="assets-activation" class="assets-panel-card dash-activation-card" hidden>
+            <h3>Account Activation Required</h3>
+            <p>Activate your account with a first deposit to view and manage your assets.</p>
+            <button type="button" class="btn-deposit-cta" data-goto-tab="deposit">Make First Deposit</button>
+          </div>
+
+          <div id="assets-active" class="assets-panel-card" hidden>
+            <div class="assets-panel-toolbar">
+              <h2 class="assets-panel-title">Your Assets</h2>
+              <div class="assets-panel-controls">
+                <label class="assets-search-wrap">
+                  <i class="bi bi-search" aria-hidden="true"></i>
+                  <input type="search" id="assets-search" placeholder="Search assets..." autocomplete="off" aria-label="Search assets">
+                </label>
+                <select id="assets-type-filter" class="assets-type-filter" aria-label="Filter by asset type">
+                  <option value="all">All Assets</option>
+                  <option value="crypto">Crypto</option>
+                  <option value="fiat">Fiat</option>
+                </select>
+              </div>
+            </div>
+            <div class="assets-table-wrap">
+              <table class="assets-table" id="assets-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Asset <i class="bi bi-chevron-expand assets-th-sort" aria-hidden="true"></i></th>
+                    <th scope="col">Type <i class="bi bi-chevron-expand assets-th-sort" aria-hidden="true"></i></th>
+                    <th scope="col">Balance <i class="bi bi-chevron-expand assets-th-sort" aria-hidden="true"></i></th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="assets-table-body"></tbody>
+              </table>
+              <p id="assets-table-empty" class="assets-table-empty" hidden>No assets match your search.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Investments -->
+      <div id="panel-investments" class="dash-panel" hidden>
+        <div class="inv-header">
+          <h2>Investment Portfolio</h2>
+          <button type="button" class="btn-primary" id="contact-investment-btn">Contact Support for Investment</button>
+        </div>
+        <div class="summary-cards">
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-pie-chart" aria-hidden="true"></i></span>
+            <h3>Total Portfolio Value</h3>
+            <div class="value" id="inv-total-value">$0.00</div>
+            <div class="subtext green" id="inv-ytd">+0.00% YTD</div>
+          </div>
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-bar-chart-fill" aria-hidden="true"></i></span>
+            <h3>Annual Return</h3>
+            <div class="value" id="inv-total-return">$0.00</div>
+            <div class="subtext green" id="inv-return-pct">+0.00%</div>
+          </div>
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-calendar2-week" aria-hidden="true"></i></span>
+            <h3>Monthly Return</h3>
+            <div class="value" id="inv-monthly-return">$0.00</div>
+            <div class="subtext green" id="inv-monthly-return-pct">+0.95% monthly</div>
+          </div>
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-percent" aria-hidden="true"></i></span>
+            <h3>Dividend Yield</h3>
+            <div class="value" id="inv-dividend">0.00%</div>
+            <div class="subtext green">Last 12 months</div>
+          </div>
+        </div>
+        <div class="table-section">
+          <h3>Investment Purchase History</h3>
+          <table class="dash-data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="purchase-history-body"></tbody>
+          </table>
+        </div>
+        <div class="table-section" id="profit-history-section" hidden>
+          <h3>Profit History</h3>
+          <table class="dash-data-table">
+            <thead>
+              <tr>
+                <th>Profit Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Profit %</th>
+                <th>Portfolio Before</th>
+                <th>Profit Earned</th>
+                <th>Portfolio After</th>
+              </tr>
+            </thead>
+            <tbody id="profit-history-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Profits -->
+      <div id="panel-profits" class="dash-panel" hidden>
+        <div class="inv-header">
+          <h2>Profit History</h2>
+        </div>
+        <div class="summary-cards">
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-cash-coin" aria-hidden="true"></i></span>
+            <h3>Total Profit Earned</h3>
+            <div class="value green" id="profit-tab-total">$0.00</div>
+            <div class="subtext" id="profit-tab-count">0 profit entries</div>
+          </div>
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-tags" aria-hidden="true"></i></span>
+            <h3>Profit Type</h3>
+            <div class="value" id="profit-tab-latest-period">—</div>
+          </div>
+          <div class="card">
+            <span class="card-icon"><i class="bi bi-clock-history" aria-hidden="true"></i></span>
+            <h3>Most Recent Profit</h3>
+            <div class="value green" id="profit-tab-latest-usd">$0.00</div>
+            <div class="subtext" id="profit-tab-latest-date">—</div>
+          </div>
+        </div>
+        <div class="table-section">
+          <table class="dash-data-table">
+            <thead>
+              <tr>
+                <th>Profit Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Profit %</th>
+                <th>Portfolio Before</th>
+                <th>Profit Earned</th>
+                <th>Portfolio After</th>
+              </tr>
+            </thead>
+            <tbody id="profit-tab-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Transactions -->
+      <div id="panel-transactions" class="dash-panel" hidden>
+        <h2>Transaction History</h2>
+        <div class="filters">
+          <select id="tx-filter-type" aria-label="Filter by type">
+            <option value="all">All Transactions</option>
+            <option value="Deposit">Deposits</option>
+            <option value="Withdraw">Withdraws</option>
+          </select>
+          <input type="date" id="tx-filter-date" aria-label="Filter by date">
+        </div>
+        <div class="table-section table-section-flush">
+          <table class="dash-data-table" id="transactions-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="transactions-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Deposit -->
+      <div id="panel-deposit" class="dash-panel" hidden>
+        <div class="page deposit-page">
+          <div class="deposit-page-header">
+            <h1>Request Deposit</h1>
+            <p>Add funds to your account to start investing</p>
+          </div>
+
+          <form id="deposit-form" class="deposit-form-dash" novalidate>
+            <div class="deposit-info-box">
+              <h2>Crypto Deposit Information</h2>
+              <ul>
+                <li>Minimum deposit: $5,000.00 USD (pay with your selected cryptocurrency)</li>
+                <li>Processing time: 1–2 hours after confirmation</li>
+                <li>Deposits are processed after blockchain confirmation</li>
+                <li>Accepts BTC, ETH, USDT, USDC, XRP, XLM, TRX, SOL, and Flare (FLR) deposits</li>
+                <li>Select the correct blockchain network before sending (required for USDT and multi-chain assets)</li>
+              </ul>
+            </div>
+
+            <div class="deposit-field">
+              <label for="deposit-crypto">Cryptocurrency Type <span class="req">*</span></label>
+              <select id="deposit-crypto" name="asset" required></select>
+            </div>
+
+            <div class="deposit-field" id="deposit-network-field">
+              <label for="deposit-network">Blockchain Network <span class="req">*</span></label>
+              <select id="deposit-network" name="network" required aria-describedby="deposit-network-hint"></select>
+              <p id="deposit-network-hint" class="deposit-field-hint">Select the network that matches your sending wallet. Sending on the wrong network may result in lost funds.</p>
+            </div>
+
+            <div class="deposit-field">
+              <label for="deposit-amount">Amount <span class="req">*</span></label>
+              <div class="deposit-amount-group">
+                <input type="number" id="deposit-amount" name="amount" min="5000" step="any" placeholder="0.00" required>
+                <span class="deposit-amount-unit">USD</span>
+              </div>
+            </div>
+
+            <section class="deposit-card" aria-labelledby="deposit-heading">
+              <div class="deposit-instruction" id="deposit-heading">
+                <span class="pin-emoji" aria-hidden="true">📍</span>
+                <span id="deposit-instruction-text">Select a cryptocurrency above.</span>
+              </div>
+              <div class="qr-wrapper">
+                <div class="qr-box">
+                  <canvas id="deposit-qr-canvas" aria-label="Deposit QR code"></canvas>
+                  <img id="deposit-qr-img" alt="" hidden>
+                </div>
+              </div>
+              <div class="deposit-field-row">
+                <label id="deposit-address-label" for="deposit-address-display">Deposit Address:</label>
+                <div class="address-row">
+                  <div class="address-input" id="deposit-address-display" title=""></div>
+                  <button type="button" class="copy-btn" id="deposit-copy-btn">Copy</button>
+                </div>
+              </div>
+              <div class="deposit-warning" role="note">
+                <span aria-hidden="true">⚠️</span>
+                <span><strong>Important:</strong> <span id="deposit-warning-text">Only send the selected asset to this address.</span></span>
+              </div>
+            </section>
+
+            <input type="file" id="deposit-proof-file" accept="image/png,image/jpeg,image/gif,image/webp,image/heic,image/heif,application/pdf,.pdf" hidden>
+            <button type="button" class="btn-upload-proof" id="deposit-upload-btn">
+              <strong>Click here to upload payment proof</strong>
+            </button>
+            <p id="deposit-proof-name" class="deposit-proof-name" hidden></p>
+
+            <div class="summary-box">
+              <div class="summary-row">
+                <div class="summary-label">Deposit Amount (USD):</div>
+                <div class="summary-value" id="summary-crypto-amount">$0.00</div>
+              </div>
+              <div class="summary-row">
+                <div class="summary-label">Token equivalent:</div>
+                <div class="summary-value" id="summary-token-equivalent">—</div>
+              </div>
+              <div class="summary-row">
+                <div class="summary-label">Processing Fee:</div>
+                <div class="summary-value" id="summary-processing-fee">$0.00</div>
+              </div>
+              <div class="summary-row">
+                <div class="summary-label">Total to Credit:</div>
+                <div class="summary-value" id="summary-total-credit">$0.00</div>
+              </div>
+            </div>
+
+            <p id="deposit-form-error" class="form-msg error" hidden></p>
+
+            <div class="submit-wrap">
+              <button type="submit" class="btn-submit-deposit">Submit Deposit Request</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- Withdrawal — reference: Request Crypto Withdrawal -->
+      <div id="panel-withdrawal" class="dash-panel" hidden>
+        <div class="withdraw-page-wrap">
+          <div class="page withdraw-page withdraw-page-card">
+            <header class="withdraw-page-header">
+              <h1>Request Crypto Withdrawal</h1>
+              <p class="withdraw-intro">
+                All crypto withdrawals require approval and will be processed within 24–48 hours.
+                You will receive a confirmation email once your request is processed.
+              </p>
+              <hr class="withdraw-divider" aria-hidden="true">
+            </header>
+
+            <div class="withdraw-layout">
+              <form id="withdrawal-form" class="withdraw-form" novalidate>
+                <h2 class="withdraw-section-title">Withdrawal Details</h2>
+
+                <div class="withdraw-field">
+                  <label for="withdrawal-amount">Withdrawal Amount (USD) <span class="req">*</span></label>
+                  <input
+                    type="number"
+                    id="withdrawal-amount"
+                    name="amount"
+                    min="0"
+                    step="0.01"
+                    value="0"
+                    inputmode="decimal"
+                    required
+                    aria-describedby="withdrawal-amount-hint"
+                  >
+                  <p id="withdrawal-amount-hint" class="withdraw-field-hint">
+                    Available: <span id="withdrawal-available">$0.00</span> |
+                    Minimum: <span id="withdrawal-minimum">$100</span>
+                  </p>
+                </div>
+
+                <div class="withdraw-field">
+                  <label for="withdrawal-reason">Reason for Withdrawal <span class="req">*</span></label>
+                  <select id="withdrawal-reason" name="reason" required>
+                    <option value="">Select reason</option>
+                  </select>
+                </div>
+
+                <div class="withdraw-field">
+                  <label for="withdrawal-method">Crypto Withdrawal Method <span class="req">*</span></label>
+                  <select id="withdrawal-method" name="method" required>
+                    <option value="">Select crypto</option>
+                  </select>
+                </div>
+
+                <div class="withdraw-field">
+                  <label for="withdrawal-wallet">Crypto Wallet Address <span class="req">*</span></label>
+                  <input
+                    type="text"
+                    id="withdrawal-wallet"
+                    name="wallet"
+                    placeholder="Enter your wallet address"
+                    autocomplete="off"
+                    spellcheck="false"
+                    required
+                  >
+                </div>
+
+                <div class="withdraw-field">
+                  <label for="withdrawal-notes">Additional Information</label>
+                  <textarea
+                    id="withdrawal-notes"
+                    name="notes"
+                    rows="4"
+                    placeholder="Any additional information or special instructions…"
+                  ></textarea>
+                </div>
+
+                <p id="withdrawal-form-error" class="form-msg error" hidden></p>
+                <p id="withdrawal-form-success" class="form-msg success" hidden></p>
+
+                <div class="withdraw-submit-wrap">
+                  <button type="submit" class="btn-submit-withdraw">Submit Withdrawal Request</button>
+                </div>
+              </form>
+
+              <aside class="withdraw-summary-aside" aria-label="Withdrawal summary">
+                <div class="withdraw-summary-box">
+                  <div class="withdraw-summary-item">
+                    <span class="withdraw-summary-label">Amount</span>
+                    <span class="withdraw-summary-value" id="withdraw-summary-amount">$0</span>
+                  </div>
+                  <div class="withdraw-summary-item">
+                    <span class="withdraw-summary-label">Method</span>
+                    <span class="withdraw-summary-value" id="withdraw-summary-method">Not selected</span>
+                  </div>
+                  <div class="withdraw-summary-item">
+                    <span class="withdraw-summary-label">Wallet</span>
+                    <span class="withdraw-summary-value withdraw-summary-value--wallet" id="withdraw-summary-wallet">Not provided</span>
+                  </div>
+                  <div class="withdraw-summary-item">
+                    <span class="withdraw-summary-label">Processing Time</span>
+                    <span class="withdraw-summary-value" id="withdraw-summary-time">24–48 hours</span>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Deposit Receipt Page ──────────────────────────── -->
+      <div id="panel-deposit-receipt" class="dash-panel" hidden>
+        <div class="page receipt-page">
+          <div class="receipt-page-card">
+            <div class="receipt-modal-coin">
+              <img id="receipt-coin-img" src="" alt="" width="72" height="72" class="receipt-coin-img" hidden>
+              <span id="receipt-coin-fallback" class="receipt-coin-fallback" hidden></span>
+            </div>
+            <p class="receipt-modal-label" id="receipt-modal-title">Deposit Requested</p>
+            <p class="receipt-modal-amount" id="receipt-modal-amount">—</p>
+
+            <div class="receipt-modal-rows">
+              <div class="receipt-modal-row">
+                <span class="receipt-modal-key">USD Value</span>
+                <span class="receipt-modal-val" id="receipt-modal-usd">—</span>
+              </div>
+              <div class="receipt-modal-row">
+                <span class="receipt-modal-key">Status</span>
+                <span class="receipt-modal-val">
+                  <span class="receipt-modal-badge">Pending Review</span>
+                </span>
+              </div>
+              <div class="receipt-modal-row">
+                <span class="receipt-modal-key">Network</span>
+                <span class="receipt-modal-val" id="receipt-modal-network">—</span>
+              </div>
+              <div class="receipt-modal-row">
+                <span class="receipt-modal-key">Deposit Address</span>
+                <span class="receipt-modal-val receipt-modal-mono" id="receipt-modal-address" title="">—</span>
+              </div>
+              <div class="receipt-modal-row">
+                <span class="receipt-modal-key">Date</span>
+                <span class="receipt-modal-val" id="receipt-modal-date">—</span>
+              </div>
+              <div class="receipt-modal-row">
+                <span class="receipt-modal-key">Reference ID</span>
+                <span class="receipt-modal-val receipt-modal-mono" id="receipt-modal-ref">—</span>
+              </div>
+            </div>
+
+            <p class="receipt-modal-note">Our team will review and confirm your deposit within 1–2 hours.</p>
+            <div class="receipt-page-actions">
+              <button type="button" class="receipt-modal-close-btn" id="receipt-modal-close">Make Another Deposit</button>
+              <button type="button" class="receipt-page-secondary-btn" id="receipt-go-overview">Go to Overview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages — client side of the admin support conversation -->
+      <div id="panel-messages" class="dash-panel" hidden>
+        <div class="chat-thread">
+          <header class="chat-thread__head">
+            <span class="chat-thread__avatar"><i class="bi bi-headset" aria-hidden="true"></i></span>
+            <div class="chat-thread__titles">
+              <h2>Digital Wealth Support</h2>
+              <p>Send us a message — replies appear here instantly.</p>
+            </div>
+            <span class="chat-thread__status"><span class="chat-thread__dot" aria-hidden="true"></span> Support</span>
+          </header>
+          <div class="chat-thread__body" id="chat-thread-body" aria-live="polite">
+            <p class="chat-thread__empty" id="chat-thread-empty">No messages yet. Say hello — our team is happy to help.</p>
+          </div>
+          <form class="chat-thread__form" id="chat-thread-form">
+            <textarea id="chat-thread-input" rows="1" maxlength="2000" placeholder="Type your message…" aria-label="Message"></textarea>
+            <button type="submit" id="chat-thread-send" class="chat-thread__send"><i class="bi bi-send-fill" aria-hidden="true"></i><span>Send</span></button>
+          </form>
+        </div>
+      </div>
+
+      <div id="panel-no-app" class="dash-panel" hidden>
+        <div class="dash-activation-card">
+          <h3>Your account data could not be found</h3>
+          <p>Please complete sign-up or contact support.</p>
+          <a href="signup.html" class="btn-deposit-cta">Complete Sign Up</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div><!-- /.portal-main -->
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/site-build.js"></script>
+  <script src="js/storage-upload.js?v=2"></script>
+  <script src="js/account-ledger.js?v=12"></script>
+  <script src="js/crypto-prices.js?v=7"></script>
+  <script src="js/wallet-config.js"></script>
+  <script src="js/auth-utils.js"></script>
+  <script src="js/realtime.js"></script>
+  <script src="js/notifications.js?v=3"></script>
+  <script src="js/portal-chat.js?v=2"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/table-pagination.js?v=1"></script>
+  <script src="js/vendor/qrcode.min.js"></script>
+  <script src="js/deposit-submit.js"></script>
+  <script src="js/withdrawal-panel.js"></script>
+  <script src="js/dashboard-assets.js?v=11"></script>
+  <script src="js/dashboard.js?v=37"></script>
+  <script>
+    (function () {
+      if (window.DWP_DEPOSIT_BUILD !== "deposit-submit-2025-05-21-prod") {
+        console.error(
+          "[DWP] Stale deposit script. Expected deposit-submit.js, got:",
+          window.DWP_DEPOSIT_BUILD || "none"
+        );
+      }
+    })();
+  </script>
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Account Pending Review | Digital Wealth Partners</title>
+  <meta name="description" content="Your application is under review. You will be able to sign in once our team approves your account.">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-page">
+
+  <header class="header header-scrolled" id="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png?v=2" alt="Digital Wealth Partners" class="logo-box" width="500" height="308">
+      </a>
+      <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="services.html" class="nav-item">Services</a>
+        <a href="digital-asset-custody.html" class="nav-item">Digital Asset Custody</a>
+        <a href="about-us.html" class="nav-item">About Us</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="login.html" class="nav-item">Login</a>
+        <a href="signup.html" class="nav-item signup-btn-mobile">Sign Up</a>
+      </nav>
+      <a href="signup.html" class="contact-btn">Sign Up</a>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay" hidden></div>
+  </header>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h2 id="pending-title">Application Submitted</h2>
+        <p id="pending-lead">Thank you. Your account is waiting for review by our team.</p>
+      </div>
+
+      <div class="login-body">
+        <div class="pending-message" id="pending-message">
+          <p>
+            We received your LLC formation application. You will <strong>not</strong> be able to sign in until an administrator approves your account.
+          </p>
+          <p id="pending-email-line" hidden>
+            Registered email: <strong id="pending-email"></strong>
+          </p>
+          <p>
+            You will receive an email when your account is ready. If you have questions, contact us at
+            <a href="contact.html" class="link-primary">our contact page</a>.
+          </p>
+        </div>
+
+        <div class="form-options" style="margin-top: 1.5rem;">
+          <a href="login.html" class="btn btn-login btn-lg" style="display: inline-block; text-align: center; width: 100%;">
+            <span class="btn-text">Back to Sign In</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="js/site-build.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth-utils.js"></script>
+  <script src="js/footer.js?v=3"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/account-pending.js"></script>
+</body>
+</html>

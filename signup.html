@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign Up | Digital Wealth Partners</title>
+  <meta name="description" content="Open your Digital Wealth Partners client account. Complete your application in 3 simple steps.">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/signup.css">
+</head>
+<body class="signup-page">
+
+  <header class="header header-scrolled" id="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png?v=2" alt="Digital Wealth Partners" class="logo-box" width="500" height="308">
+      </a>
+      <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="services.html" class="nav-item">Services</a>
+        <a href="digital-asset-custody.html" class="nav-item">Digital Asset Custody</a>
+        <a href="about-us.html" class="nav-item">About Us</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="login.html" class="nav-item">Login</a>
+        <a href="signup.html" class="nav-item active signup-btn-mobile">Sign Up</a>
+      </nav>
+      <a href="signup.html" class="contact-btn">Sign Up</a>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay" hidden></div>
+  </header>
+
+  <div class="signup-page-wrap">
+    <div class="signup-container">
+      <div class="form-card">
+        <div class="text-center mb-4">
+          <h1 class="form-title">Open Your Account</h1>
+          <p class="text-muted">Complete your application in 3 simple steps</p>
+        </div>
+
+        <div class="progress" role="progressbar" aria-valuemin="1" aria-valuemax="3" aria-valuenow="1" id="progress-wrap">
+          <div class="progress-bar" id="progress-bar" style="width: 33.33%"></div>
+        </div>
+
+        <div class="step-indicator" id="step-indicator">
+          <div class="step active" data-step="1">
+            <span class="step-number">1</span>
+            <span class="step-label">Account Setup</span>
+          </div>
+          <div class="step" data-step="2">
+            <span class="step-number">2</span>
+            <span class="step-label">LLC Details</span>
+          </div>
+          <div class="step" data-step="3">
+            <span class="step-number">3</span>
+            <span class="step-label">Review &amp; Submit</span>
+          </div>
+        </div>
+
+        <form id="signup-form" class="needs-validation" novalidate>
+          <div id="form-alert" hidden></div>
+
+          <!-- Step 1 -->
+          <section class="form-step" data-step-panel="1">
+            <div class="form-section">
+              <h3 class="section-title">Account Information</h3>
+              <div class="form-grid">
+                <div class="mb-3">
+                  <label class="form-label" for="email"><i class="bi bi-envelope"></i> Email Address</label>
+                  <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                  <div class="invalid-feedback" data-error="email"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="phone"><i class="bi bi-telephone"></i> Phone Number</label>
+                  <input type="tel" class="form-control" id="phone" name="phone" placeholder="+1 (555) 555-5555" required>
+                  <div class="invalid-feedback" data-error="phone"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="password"><i class="bi bi-lock"></i> Password</label>
+                  <div class="password-input-wrapper">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Minimum 8 characters" required minlength="8">
+                    <button type="button" class="password-toggle-btn" data-toggle="password" aria-label="Show password"><i class="bi bi-eye"></i></button>
+                  </div>
+                  <div class="invalid-feedback" data-error="password"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="passwordConfirm"><i class="bi bi-lock"></i> Confirm Password</label>
+                  <div class="password-input-wrapper">
+                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Re-enter password" required>
+                    <button type="button" class="password-toggle-btn" data-toggle="passwordConfirm" aria-label="Show password"><i class="bi bi-eye"></i></button>
+                  </div>
+                  <div class="invalid-feedback" data-error="passwordConfirm"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title">Personal Information</h3>
+              <div class="form-grid">
+                <div class="mb-3">
+                  <label class="form-label" for="fullName"><i class="bi bi-person"></i> Full Legal Name</label>
+                  <input type="text" class="form-control" id="fullName" name="fullName" placeholder="As shown on government ID" required>
+                  <div class="invalid-feedback" data-error="fullName"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="dob"><i class="bi bi-calendar"></i> Date of Birth</label>
+                  <input type="date" class="form-control" id="dob" name="dob" required>
+                  <div class="invalid-feedback" data-error="dob"></div>
+                </div>
+                <div class="mb-3 full-width">
+                  <label class="form-label" for="streetAddress"><i class="bi bi-geo-alt"></i> Street Address</label>
+                  <input type="text" class="form-control" id="streetAddress" name="streetAddress" placeholder="Street address, apartment, suite, etc." required>
+                  <div class="invalid-feedback" data-error="streetAddress"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="country"><i class="bi bi-globe"></i> Country</label>
+                  <input type="text" class="form-control" id="country" name="country" list="country-options" placeholder="e.g., United States" required>
+                  <datalist id="country-options"></datalist>
+                  <div class="invalid-feedback" data-error="country"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="state"><i class="bi bi-map"></i> State / Region</label>
+                  <input type="text" class="form-control" id="state" name="state" list="state-options" placeholder="e.g., California">
+                  <datalist id="state-options"></datalist>
+                  <div class="invalid-feedback" data-error="state"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="local"><i class="bi bi-building"></i> Local Area (City)</label>
+                  <input type="text" class="form-control" id="local" name="local" placeholder="e.g., Los Angeles" required>
+                  <div class="invalid-feedback" data-error="local"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="ssn"><i class="bi bi-credit-card"></i> Social Security Number or EIN</label>
+                  <input type="text" class="form-control" id="ssn" name="ssn" placeholder="XXX-XX-XXXX or EIN" required>
+                  <div class="invalid-feedback" data-error="ssn"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-end">
+              <button type="button" class="signup-btn-primary" data-next="2">Continue to LLC Details &rarr;</button>
+            </div>
+          </section>
+
+          <!-- Step 2 -->
+          <section class="form-step" data-step-panel="2" hidden>
+            <div class="form-section">
+              <h3 class="section-title">LLC Structure</h3>
+              <div class="form-grid">
+                <div class="mb-3 full-width">
+                  <label class="form-label" for="llcName"><i class="bi bi-building"></i> Proposed LLC Name</label>
+                  <input type="text" class="form-control" id="llcName" name="llcName" placeholder="Digital Assets Holdings LLC" required>
+                  <div class="invalid-feedback" data-error="llcName"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="formationState"><i class="bi bi-map"></i> State of Formation</label>
+                  <input type="text" class="form-control" id="formationState" name="formationState" placeholder="e.g., Delaware" required>
+                  <div class="invalid-feedback" data-error="formationState"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="formationDate"><i class="bi bi-calendar"></i> Requested Formation Date</label>
+                  <input type="date" class="form-control" id="formationDate" name="formationDate" required>
+                  <div class="invalid-feedback" data-error="formationDate"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="ownershipType"><i class="bi bi-people"></i> Ownership Type</label>
+                  <select class="form-select" id="ownershipType" name="ownershipType" required>
+                    <option value="">Select Type</option>
+                    <option value="Single-Member">Single-Member</option>
+                    <option value="Multi-Member">Multi-Member</option>
+                  </select>
+                  <div class="invalid-feedback" data-error="ownershipType"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="primaryAsset"><i class="bi bi-coin"></i> Primary Crypto Asset</label>
+                  <select class="form-select" id="primaryAsset" name="primaryAsset" required>
+                    <option value="">Select Asset</option>
+                    <option value="XRP">XRP</option>
+                    <option value="XLM">XLM</option>
+                    <option value="Both">Both</option>
+                  </select>
+                  <div class="invalid-feedback" data-error="primaryAsset"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="assetValue"><i class="bi bi-cash-coin"></i> Estimated Asset Value</label>
+                  <input type="number" class="form-control" id="assetValue" name="assetValue" placeholder="0.00" min="0" step="0.01" required>
+                  <div class="invalid-feedback" data-error="assetValue"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title">LLC Purpose</h3>
+              <div class="mb-3 full-width">
+                <label class="form-label" for="useCase"><i class="bi bi-pencil"></i> LLC Use Case</label>
+                <input type="text" class="form-control" id="useCase" name="useCase" placeholder="Describe the purpose of your LLC" required>
+                <div class="invalid-feedback" data-error="useCase"></div>
+              </div>
+            </div>
+
+            <div class="signup-nav-row">
+              <button type="button" class="signup-btn-secondary" data-back="1">&larr; Back</button>
+              <button type="button" class="signup-btn-primary" data-next="3">Review &amp; Submit &rarr;</button>
+            </div>
+          </section>
+
+          <!-- Step 3 -->
+          <section class="form-step" data-step-panel="3" hidden>
+            <div class="form-section">
+              <h3 class="section-title">Authorization &amp; Signature</h3>
+              <div class="form-grid">
+                <div class="mb-3">
+                  <label class="form-label" for="printedName"><i class="bi bi-pencil"></i> Full Legal Name (Printed)</label>
+                  <input type="text" class="form-control" id="printedName" name="printedName" required>
+                  <div class="invalid-feedback" data-error="printedName"></div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label" for="signatureDate"><i class="bi bi-calendar"></i> Date</label>
+                  <input type="date" class="form-control" id="signatureDate" name="signatureDate" required>
+                </div>
+                <div class="mb-3 full-width">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="authorization" name="authorization" required>
+                    <label class="form-check-label" for="authorization">I understand that if I receive any communication outside of official channels, I should report it to DWP immediately. DWP will never request seed phrases or ask to send cryptocurrency via email, Discord, Telegram, or any other informal platform.</label>
+                  </div>
+                  <div class="invalid-feedback" data-error="authorization"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title">&#128203; Review Your Information</h3>
+              <div class="preview-container" id="review-preview"></div>
+            </div>
+
+            <div class="signup-nav-row">
+              <button type="button" class="signup-btn-secondary" data-back="2">&larr; Back</button>
+              <button type="submit" class="signup-btn-primary signup-btn-gold" id="submit-btn">Submit Application</button>
+            </div>
+          </section>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+
+  <script src="js/site-build.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth-utils.js"></script>
+  <script src="js/countries.js"></script>
+  <script src="js/footer.js?v=3"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/signup.js?v=2"></script>
+</body>
+</html>

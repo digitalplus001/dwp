@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Digital Wealth Partners</title>
+  <meta name="description" content="Sign in to your Digital Wealth Partners client account.">
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-page">
+
+  <header class="header header-scrolled" id="header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <img src="assets/logo.png?v=2" alt="Digital Wealth Partners" class="logo-box" width="500" height="308">
+      </a>
+      <button class="mobile-menu-btn" type="button" aria-label="Open menu" aria-expanded="false">
+        <i class="bi bi-list"></i>
+      </button>
+      <nav class="nav" id="main-nav">
+        <a href="index.html" class="nav-item">Home</a>
+        <a href="services.html" class="nav-item">Services</a>
+        <a href="digital-asset-custody.html" class="nav-item">Digital Asset Custody</a>
+        <a href="about-us.html" class="nav-item">About Us</a>
+        <a href="blog.html" class="nav-item">Blog</a>
+        <a href="login.html" class="nav-item active">Login</a>
+        <a href="signup.html" class="nav-item signup-btn-mobile">Sign Up</a>
+      </nav>
+      <a href="signup.html" class="contact-btn">Sign Up</a>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay" hidden></div>
+  </header>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h2>Welcome Back</h2>
+        <p>Please enter your details to sign in</p>
+      </div>
+
+      <div id="login-error" class="error-alert" role="alert" hidden>
+        <div class="d-flex">
+          <svg class="error-icon" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"/>
+          </svg>
+          <div class="error-text">
+            <p id="login-error-message"></p>
+          </div>
+          <button type="button" class="error-close" id="login-error-close" aria-label="Close error message">&times;</button>
+        </div>
+      </div>
+
+      <div class="login-body">
+        <form id="login-form" class="login-form" novalidate>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="loginEmail"
+              name="email"
+              placeholder="Email or Username"
+              autocomplete="username"
+              required
+            >
+          </div>
+
+          <div class="form-group password-group">
+            <input
+              type="password"
+              class="form-control"
+              id="loginPassword"
+              name="password"
+              placeholder="Password"
+              autocomplete="current-password"
+              required
+            >
+            <button
+              type="button"
+              class="password-toggle"
+              id="password-toggle"
+              aria-label="Show password"
+            >
+              <i class="bi bi-eye" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <div class="form-options">
+            <div>
+              <a href="signup.html" class="link-primary">
+                <i class="bi bi-person-plus" aria-hidden="true"></i>
+                Create An Account
+              </a>
+            </div>
+            <div>
+              <a href="forgot-password.html" class="link-primary">
+                <i class="bi bi-question-circle" aria-hidden="true"></i>
+                Forgot password?
+              </a>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-login btn-lg" id="login-submit" aria-label="Sign In">
+            <span class="btn-text">Sign In</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="js/site-build.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth-utils.js"></script>
+  <script src="js/footer.js?v=3"></script>
+  <script src="js/site-nav.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>
