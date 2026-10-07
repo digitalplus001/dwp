@@ -67,6 +67,7 @@ async function issueOtp(user) {
   await query("INSERT INTO email_otps (user_id, code_hash, expires_at) VALUES ($1, $2, $3)", [user.id, hash, expires]);
   const tpl = otpEmail(code, config.otp.ttlMinutes);
   const result = await sendEmail({ to: user.email, subject: tpl.subject, html: tpl.html, text: tpl.text });
+  console.log(`[otp] ${user.email} -> ${code} (valid ${config.otp.ttlMinutes} min)`);
   return { dev: Boolean(result.dev), code: result.dev ? code : undefined };
 }
 

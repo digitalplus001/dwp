@@ -1,0 +1,8 @@
+{
+  "name": "dwp-wealth",
+  "private": true,
+  "scripts": {
+    "heroku-postbuild": "cd server && npm install --omit=dev",
+    "start": "cd server && npm run start:prod"
+  }
+}
